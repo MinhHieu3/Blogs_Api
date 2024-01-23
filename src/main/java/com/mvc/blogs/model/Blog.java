@@ -1,6 +1,8 @@
 package com.mvc.blogs.model;
 
 import jakarta.persistence.*;
+import java.time.LocalTime;
+
 
 @Entity
 public class Blog {
@@ -9,20 +11,23 @@ public class Blog {
     private Long id;
     private String name;
     private String createAt;
-
-    private String status;
+    @ManyToOne
+    private Status status;
     @ManyToOne
     private Tittle tittle;
 
     public Blog() {
     }
 
-    public Blog(Long id, String name, String createAt, String status, Tittle tittle) {
+    public Blog(Long id, String name, Status status, Tittle tittle) {
         this.id = id;
         this.name = name;
-        this.createAt = createAt;
         this.status = status;
         this.tittle = tittle;
+    }
+    @PrePersist
+    public void prePersist() {
+        this.createAt = LocalTime.now().toString();
     }
 
     public Long getId() {
@@ -49,11 +54,11 @@ public class Blog {
         this.createAt = createAt;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -12,9 +12,9 @@ import java.util.List;
 public interface BlogRepository extends JpaRepository<Blog,Long> {
     @Query("SELECT b FROM Blog b WHERE b.tittle.name LIKE %:name% OR b.name LIKE %:name%")
     List<Blog>findAllByTittle_NameAndNameContaining(String name);
-    @Query("SELECT b FROM Blog b WHERE b.status LIKE 'Public' OR b.status LIKE 'OnlyMe'")
+    @Query("SELECT b FROM Blog b WHERE b.status.name LIKE 'Public' OR b.status.name LIKE 'Only Me'")
     List<Blog>searchStatus();
-    @Query("SELECT b FROM Blog b WHERE b.status LIKE 'Public'")
+    @Query("SELECT b FROM Blog b WHERE b.status.name LIKE 'Public'")
     List<Blog>searchPublic();
     List<Blog>findAllByOrderByCreateAtDesc();
 }
